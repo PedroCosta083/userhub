@@ -80,6 +80,12 @@ public class UserRepositoryTest {
                 "pedro@gmail.com",
                 "123123123");
         userRepository.create(user);
+        UserEntity foundUser = userRepository.searchById(user.getId());
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getId()).isEqualTo(user.getId());
+        assertThat(foundUser.getName()).isEqualTo(user.getName());
+        assertThat(foundUser.getEmail()).isEqualTo(user.getEmail());
+        
     }
 
     @Test

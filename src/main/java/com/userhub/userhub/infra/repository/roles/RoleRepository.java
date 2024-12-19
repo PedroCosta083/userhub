@@ -34,8 +34,8 @@ public class RoleRepository implements RoleRepositoryInterface {
     }
 
     public RoleEntity searchByName(String name) {
-        // RoleSchema roleSchema = jpaRoleRepository.findByName(name);
-        return jpaRoleRepository.findByName(name);
+        RoleSchema roleSchema = jpaRoleRepository.findByName(name);
+        return RoleMapper.toDomain(roleSchema);
     }
 
     public List<RoleEntity> searchAll() {

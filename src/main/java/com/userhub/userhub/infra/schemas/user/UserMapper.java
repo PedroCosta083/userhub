@@ -11,10 +11,12 @@ import com.userhub.userhub.infra.schemas.role.RoleMapper;
 
 public class UserMapper {
     public static UserEntity toDomain(UserSchema schema) {
-
-        Set<RoleEntity> roles = schema.getRoles().stream()
-                .map(RoleMapper::toDomain)
-                .collect(Collectors.toSet());
+        Set<RoleEntity> roles = null;
+        if (schema.getRoles() != null) {
+            roles = schema.getRoles().stream()
+                    .map(RoleMapper::toDomain)
+                    .collect(Collectors.toSet());
+        }
 
         return new UserEntity(
                 schema.getId(),
