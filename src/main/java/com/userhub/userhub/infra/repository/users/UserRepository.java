@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import com.userhub.userhub.domain.entities.user.UserEntity;
+import com.userhub.userhub.infra.schemas.user.UserMapper;
+import com.userhub.userhub.infra.schemas.user.UserSchema;
 
 @Repository
 public class UserRepository implements UserRepositoryInterface {
@@ -18,43 +20,49 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public void create(UserEntity user) {
-        jpaUserRepository.save(user);
+        UserSchema userSchema = UserMapper.toSchema(user);
+        jpaUserRepository.save(userSchema);
     }
 
     @Override
     public void updateUser(UserEntity user) {
-        jpaUserRepository.save(user);
+        UserSchema userSchema = UserMapper.toSchema(user);
+        jpaUserRepository.save(userSchema);
     }
 
     @Override
     public UserEntity searchByEmail(String email) {
-        return jpaUserRepository.findByEmail(email);
+        UserSchema userFinded = jpaUserRepository.findByEmail(email);
+        return UserMapper.toDomain(userFinded);
     }
 
     @Override
     public UserEntity searchByLogin(String login) {
-        return jpaUserRepository.findByLogin(login);
+        UserSchema userFinded = jpaUserRepository.findByLogin(login);
+        return UserMapper.toDomain(userFinded);
     }
 
     @Override
     public List<UserEntity> searchByRole(String roleName) {
-        return jpaUserRepository.findByRoles_name(roleName);
+        List<UserSchema> userSchemas = jpaUserRepository.findByRoles_name(roleName);
+        return UserMapper.toDomainList(userSchemas);
     }
 
     @Override
     public UserEntity searchById(UUID id) {
-        return jpaUserRepository.findById(id).orElse(null);
+        UserSchema userFinded = jpaUserRepository.findById(id).orElse(null);
+        return UserMapper.toDomain(userFinded);
     }
 
     @Override
     public List<UserEntity> searchAll() {
-        return jpaUserRepository.findAll();
+        List<UserSchema> userSchemas = jpaUserRepository.findAll();
+        return UserMapper.toDomainList(userSchemas);
     }
 
     @Override
     public void deleteAll() {
         jpaUserRepository.deleteAll();
     }
-    
 
 }

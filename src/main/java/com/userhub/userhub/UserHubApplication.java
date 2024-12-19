@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.formbuilder.formbuilder.domain.entities")
-@EnableJpaRepositories(basePackages = "com.formbuilder.formbuilder.infra.repository")
+@EntityScan(basePackages = "com.userhub.userhub.infra.schemas")
+@EnableJpaRepositories(basePackages = "com.userhub.userhub.infra.repository")
 public class UserHubApplication {
 	public static void main(String[] args) {
 

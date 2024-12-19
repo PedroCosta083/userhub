@@ -7,16 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // import org.springframework.data.jpa.repository.Query;
 // import org.springframework.data.repository.query.Param;
 
-import com.userhub.userhub.domain.entities.user.UserEntity;
+import com.userhub.userhub.infra.schemas.user.UserSchema;
 
-public interface JpaUserRepository extends JpaRepository<UserEntity, UUID> {
+public interface JpaUserRepository extends JpaRepository<UserSchema, UUID> {
     // O Spring Data já fornece os métodos básicos (save, delete, findById, etc.)
-    UserEntity findByLogin(String login);
+    UserSchema findByLogin(String login);
 
-    UserEntity findByEmail(String email);
+    UserSchema findByEmail(String email);
 
-    // @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE r.name = :roleName")
-    List<UserEntity> findByRoles_name(String roleName); // Nova consulta para buscar usuários por
+    // @Query("SELECT u FROM UserSchema u JOIN u.roles r WHERE r.name = :roleName")
+    List<UserSchema> findByRoles_name(String roleName); // Nova consulta para buscar usuários por
                                                         // role
 
 }

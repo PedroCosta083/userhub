@@ -1,25 +1,14 @@
 package com.userhub.userhub.domain.entities.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import com.userhub.userhub.domain.entities.base.BaseEntity;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 
-@Entity
-@Table(name = "users")
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class UserEntity extends BaseEntity implements UserInterface {
 
     private LocalDate birthday;
@@ -30,29 +19,27 @@ public class UserEntity extends BaseEntity implements UserInterface {
 
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
 
-    public UserEntity(
-            // UUID id,
-            String name,
-            LocalDate birthday,
-            String login,
-            String email,
-            String password,
-            Set<RoleEntity> roles,
-            boolean active,
-            LocalDate createdAT,
-            LocalDate updatedAt,
-            LocalDate deactivatedAt) {
-        super(name, active, createdAT, updatedAt, deactivatedAt);
+    public UserEntity(String name, LocalDate birthday, String login, String email, String password) {
+        super(name);
         this.birthday = birthday;
         this.login = login;
         this.email = email;
         this.password = password;
-        this.roles = (roles != null) ? roles : Set.of();
-        validate();
+        this.validate();
+    }
+
+    public UserEntity(UUID id, String name, Boolean active, LocalDate createdAt, LocalDate updatedAt,
+            LocalDate deactivatedAt, LocalDate birthday, String login, String email,
+            String password, Set<RoleEntity> roles) {
+        super(id, name, active, createdAt, updatedAt, deactivatedAt);
+        this.birthday = birthday;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.validate();
     }
 
     public LocalDate getBirthday() {
@@ -87,6 +74,13 @@ public class UserEntity extends BaseEntity implements UserInterface {
         if (this.roles != null) {
             this.roles.remove(role);
         }
+    }
+
+    public void addRoles(Set<RoleEntity> roles) {
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+        }
+        this.roles.addAll(roles);
     }
 
     public void validate() {

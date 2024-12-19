@@ -34,19 +34,9 @@ public class UserRepositoryTest {
 
         // Cria Papeis de teste e salva no banco antes de rodar os testes
 
-        RoleEntity role1 = new RoleEntity(
-                "Admin",
-                true,
-                LocalDate.now(),
-                LocalDate.now(),
-                null);
+        RoleEntity role1 = new RoleEntity("Admin");
 
-        RoleEntity role2 = new RoleEntity(
-                "User",
-                true,
-                LocalDate.now(),
-                LocalDate.now(),
-                null);
+        RoleEntity role2 = new RoleEntity("User");
 
         roleRepository.create(role1);
         roleRepository.create(role2);
@@ -55,27 +45,19 @@ public class UserRepositoryTest {
         Set<RoleEntity> roles = Set.of(role1, role2);
 
         UserEntity user1 = new UserEntity(
-                "Pedro",
+                "Pedro Costa",
                 LocalDate.of(2003, 04, 12),
                 "hyusenn",
-                "hyusen@gmail.com",
-                "123123123",
-                roles,
-                true,
-                LocalDate.now(),
-                LocalDate.now(),
-                null);
+                "pedro@gmail.com",
+                "123123123");
+        user1.addRoles(roles);
         UserEntity user2 = new UserEntity(
-                "Tiao",
+                "Tiao Costa",
                 LocalDate.of(2003, 04, 12),
                 "tiao",
                 "tiao@gmail.com",
-                "123123123",
-                null,
-                true,
-                LocalDate.now(),
-                LocalDate.now(),
-                null);
+                "123123123");
+        user2.addRole(role2);
         userRepository.create(user1);
         userRepository.create(user2);
     }
@@ -92,16 +74,11 @@ public class UserRepositoryTest {
     @Transactional
     public void testCreate() {
         UserEntity user = new UserEntity(
-                "Pedro",
+                "Pedro Costa",
                 LocalDate.of(2003, 04, 12),
                 "hyusenn",
-                "hyusen@gmail.com",
-                "123123123",
-                null,
-                true,
-                LocalDate.now(),
-                LocalDate.now(),
-                null);
+                "pedro@gmail.com",
+                "123123123");
         userRepository.create(user);
     }
 
@@ -115,9 +92,9 @@ public class UserRepositoryTest {
     @Test
     @Transactional
     public void testFindByEmail() {
-        UserEntity user = userRepository.searchByEmail("hyusen@gmail.com");
+        UserEntity user = userRepository.searchByEmail("pedro@gmail.com");
         assertThat(user).isNotNull();
-        assertThat(user.getEmail()).isEqualTo("hyusen@gmail.com");
+        assertThat(user.getEmail()).isEqualTo("pedro@gmail.com");
     }
 
     @Test

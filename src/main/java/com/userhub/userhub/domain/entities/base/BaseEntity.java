@@ -3,42 +3,37 @@ package com.userhub.userhub.domain.entities.base;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import org.hibernate.annotations.UuidGenerator;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.NoArgsConstructor;
-
-@MappedSuperclass
-@NoArgsConstructor
 public class BaseEntity implements BaseInterface {
-    @Id
-    @UuidGenerator
-    @Column(updatable = false, nullable = false)
+
     private UUID id;
 
     private String name;
 
-    private boolean active;
+    private Boolean active;
 
-    private LocalDate createdAT;
+    private LocalDate createdAt;
 
     private LocalDate updatedAt;
 
     private LocalDate deactivatedAt;
 
-    public BaseEntity(
-            String name,
-            boolean active,
-            LocalDate createdAT,
-            LocalDate updatedAt,
-            LocalDate deactivatedAt) {
+    public BaseEntity(String name) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.active = true;
-        this.createdAT = (createdAT != null) ? createdAT : LocalDate.now();
-        this.updatedAt = (updatedAt != null) ? updatedAt : LocalDate.now();
-        this.deactivatedAt = deactivatedAt;
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
+        this.deactivatedAt = null;
+    }
+
+    public BaseEntity(UUID id, String name, Boolean active, LocalDate createdAT, LocalDate updatedAt,
+            LocalDate deactivatedAt) {
+        this.id = id;
+        this.name = name;
+        this.active = active;
+        this.createdAt = createdAT != null ? createdAT : LocalDate.now();
+        this.updatedAt = updatedAt != null ? updatedAt : LocalDate.now();
+        this.deactivatedAt = deactivatedAt != null ? deactivatedAt : null;
     }
 
     public UUID getId() {
@@ -54,7 +49,7 @@ public class BaseEntity implements BaseInterface {
     }
 
     public LocalDate getCreatedAT() {
-        return createdAT;
+        return createdAt;
     }
 
     public LocalDate getUpdatedAt() {
@@ -77,12 +72,23 @@ public class BaseEntity implements BaseInterface {
     }
 
     public void validate() {
+        if (this.id == null) {
+            throw new IllegalArgumentException("ID is required");
+        }
         if (this.name == null || this.name.isBlank()) {
             throw new IllegalArgumentException("Name is required");
         }
-        if (!Boolean.class.isInstance(this.active)) {
-            throw new IllegalArgumentException("Active must be a boolean value.");
+        if (this.active == null) {
+            throw new IllegalArgumentException("Active status is required");
+        }
+        if (this.createdAt == null) {
+            throw new IllegalArgumentException("Created date is required");
+        }
+        if (this.updatedAt == null) {
+            throw new IllegalArgumentException("Updated date is required");
+        }
+        if (this.deactivatedAt != null && this.active) {
+            throw new IllegalArgumentException("Deactivated date should be null if the entity is active");
         }
     }
-
 }
