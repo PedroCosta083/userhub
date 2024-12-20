@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import com.userhub.userhub.domain.entities.user.UserEntity;
+import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
 import com.userhub.userhub.infra.schemas.user.UserMapper;
 import com.userhub.userhub.infra.schemas.user.UserSchema;
 

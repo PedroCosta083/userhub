@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import com.userhub.userhub.domain.entities.role.RoleEntity;
+import com.userhub.userhub.domain.entities.role.RoleRepositoryInterface;
 import com.userhub.userhub.infra.schemas.role.RoleMapper;
 import com.userhub.userhub.infra.schemas.role.RoleSchema;
 

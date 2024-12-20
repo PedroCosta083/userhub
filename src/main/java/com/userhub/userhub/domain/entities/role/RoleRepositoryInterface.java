@@ -1,9 +1,7 @@
-package com.userhub.userhub.infra.repository.roles;
+package com.userhub.userhub.domain.entities.role;
 
 import java.util.List;
 import java.util.UUID;
-
-import com.userhub.userhub.domain.entities.role.RoleEntity;
 
 public interface RoleRepositoryInterface {
     void create(RoleEntity role);

@@ -1,9 +1,7 @@
-package com.userhub.userhub.infra.repository.users;
+package com.userhub.userhub.domain.entities.user;
 
 import java.util.List;
 import java.util.UUID;
-
-import com.userhub.userhub.domain.entities.user.UserEntity;
 
 public interface UserRepositoryInterface {
 
