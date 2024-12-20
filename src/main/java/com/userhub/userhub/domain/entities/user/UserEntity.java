@@ -3,11 +3,11 @@ package com.userhub.userhub.domain.entities.user;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 import com.userhub.userhub.domain.entities.base.BaseEntity;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
+import com.userhub.userhub.application.builders.user.UserBuilder;
 
 public class UserEntity extends BaseEntity implements UserInterface {
 
@@ -21,24 +21,13 @@ public class UserEntity extends BaseEntity implements UserInterface {
 
     private Set<RoleEntity> roles;
 
-    public UserEntity(String name, LocalDate birthday, String login, String email, String password) {
-        super(name);
-        this.birthday = birthday;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.validate();
-    }
-
-    public UserEntity(UUID id, String name, Boolean active, LocalDate createdAt, LocalDate updatedAt,
-            LocalDate deactivatedAt, LocalDate birthday, String login, String email,
-            String password, Set<RoleEntity> roles) {
-        super(id, name, active, createdAt, updatedAt, deactivatedAt);
-        this.birthday = birthday;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
+    public UserEntity(UserBuilder builder) {
+        super(builder);
+        this.birthday = builder.getBirthday();
+        this.login = builder.getLogin();
+        this.email = builder.getEmail();
+        this.password = builder.getPassword();
+        this.roles = builder.getRoles();
         this.validate();
     }
 
@@ -112,7 +101,7 @@ public class UserEntity extends BaseEntity implements UserInterface {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", active=" + isActive() +
-                ", createdAT=" + getCreatedAT() +
+                ", createdAT=" + getCreatedAt() +
                 ", updatedAt=" + getUpdatedAt() +
                 ", deactivatedAt=" + getDeactivatedAt() +
                 ", roles=" + roles +

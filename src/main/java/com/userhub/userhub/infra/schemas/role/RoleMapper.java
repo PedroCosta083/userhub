@@ -3,17 +3,20 @@ package com.userhub.userhub.infra.schemas.role;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.userhub.userhub.application.builders.role.RoleBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 
 public class RoleMapper {
     public static RoleEntity toDomain(RoleSchema schema) {
-        return new RoleEntity(
-                schema.getId(),
-                schema.getName(),
-                schema.getActive(),
-                schema.getCreatedAt(),
-                schema.getUpdatedAt(),
-                schema.getDeactivatedAt());
+        RoleEntity role = new RoleBuilder()
+                .id(schema.getId())
+                .name(schema.getName())
+                .active(schema.getActive())
+                .createdAt(schema.getCreatedAt())
+                .updatedAt(schema.getUpdatedAt())
+                .deactivatedAt(schema.getDeactivatedAt())
+                .build();
+        return role;
     }
 
     public static List<RoleEntity> toDomainList(List<RoleSchema> schemas) {
@@ -27,7 +30,7 @@ public class RoleMapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .active(entity.isActive())
-                .createdAt(entity.getCreatedAT())
+                .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .deactivatedAt(entity.getDeactivatedAt())
                 .build();
