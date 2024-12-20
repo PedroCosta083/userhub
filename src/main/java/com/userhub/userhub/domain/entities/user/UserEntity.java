@@ -9,11 +9,13 @@ import com.userhub.userhub.domain.entities.base.BaseEntity;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.application.builders.user.UserBuilder;
 
+import com.userhub.userhub.domain.objetcValues.Login;
+
 public class UserEntity extends BaseEntity implements UserInterface {
 
     private LocalDate birthday;
 
-    private String login;
+    private Login login;
 
     private String email;
 
@@ -35,7 +37,7 @@ public class UserEntity extends BaseEntity implements UserInterface {
         return birthday;
     }
 
-    public String getLogin() {
+    public Login getLogin() {
         return login;
     }
 
@@ -76,8 +78,8 @@ public class UserEntity extends BaseEntity implements UserInterface {
         super.validate();
         if (birthday == null)
             throw new IllegalArgumentException("Birthday cannot be null");
-        if (login == null || login.isEmpty())
-            throw new IllegalArgumentException("Login cannot be null or empty");
+        // if (login == null || login.isEmpty())
+        //     throw new IllegalArgumentException("Login cannot be null or empty");
         if (email == null || email.isEmpty() || !isValidEmail(email))
             throw new IllegalArgumentException("Invalid email");
         if (password == null || password.isEmpty())

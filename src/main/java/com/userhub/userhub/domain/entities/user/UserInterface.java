@@ -6,11 +6,13 @@ import java.util.Set;
 import com.userhub.userhub.domain.entities.base.BaseInterface;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 
+import com.userhub.userhub.domain.objetcValues.Login;
+
 public interface UserInterface extends BaseInterface {
 
     LocalDate getBirthday();
 
-    String getLogin();
+    Login getLogin();
 
     String getEmail();
 
