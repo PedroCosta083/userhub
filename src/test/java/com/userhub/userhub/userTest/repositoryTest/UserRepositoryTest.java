@@ -1,4 +1,4 @@
-package com.userhub.userhub.userTest;
+package com.userhub.userhub.userTest.repositoryTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,7 +60,7 @@ public class UserRepositoryTest {
         UserEntity user2 = new UserBuilder()
                 .name("Tiao Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login(new Login("tiao", new Password("Tiao1234")))
+                .login(new Login("tiaosad", new Password("Tiao1234")))
                 .email(new Email("tiao@gmail.com"))
                 .build();
         user2.addRole(role2);

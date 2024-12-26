@@ -18,4 +18,11 @@ public interface UserInterface extends BaseInterface {
 
     Set<RoleEntity> getRoles();
 
+    void addRole(RoleEntity role);
+
+    void removeRole(RoleEntity role);
+
+    void addRoles(Set<RoleEntity> roles);
+
+
 }

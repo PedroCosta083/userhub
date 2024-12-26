@@ -42,7 +42,6 @@ public class UserEntity extends BaseEntity implements UserInterface {
         return email;
     }
 
-
     public Set<RoleEntity> getRoles() {
         return roles;
     }
@@ -72,10 +71,6 @@ public class UserEntity extends BaseEntity implements UserInterface {
         super.validate();
         if (birthday == null)
             throw new IllegalArgumentException("Birthday cannot be null");
-        // if (login == null || login.isEmpty())
-        // throw new IllegalArgumentException("Login cannot be null or empty");
-        if (email == null || !email.isValidEmail())
-            throw new IllegalArgumentException("Invalid email");
     }
 
     @Override
