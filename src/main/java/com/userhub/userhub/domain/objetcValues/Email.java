@@ -4,23 +4,27 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Email {
-    private final String address;
+    private final String value;
 
-    public Email(String address) {
-        if (address == null || !isValidEmail(address)) {
-            throw new IllegalArgumentException("Invalid email address");
+    public Email(String value) {
+        if (value == null || !isValidEmail(value)) {
+            throw new IllegalArgumentException("Invalid email value");
         }
-        this.address = address;
+        this.value = value;
     }
 
-    public String getAddress() {
-        return address;
+    public String getvalue() {
+        return value;
     }
 
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
+    }
+
+    public boolean isValidEmail() {
+        return isValidEmail(value);
     }
 
     @Override
@@ -30,18 +34,18 @@ public class Email {
         if (o == null || getClass() != o.getClass())
             return false;
         Email email = (Email) o;
-        return Objects.equals(address, email.address);
+        return Objects.equals(value, email.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address);
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
         return "Email{" +
-                "address='" + address + '\'' +
+                "value='" + value + '\'' +
                 '}';
     }
 }

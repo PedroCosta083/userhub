@@ -8,6 +8,19 @@ import java.security.MessageDigest;
 public class Password {
     private final String value;
 
+    // private static final Pattern PASSWORD_PATTERN =
+    // Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
+
+    // public Password(String value) {
+    // // if (value == null || !PASSWORD_PATTERN.matcher(value).matches()) {
+    // // throw new IllegalArgumentException("Invalid password");
+    // // }
+    // if (value == null || value.length() < 8) {
+    // throw new IllegalArgumentException("Invalid password");
+    // }
+    // this.value = hashPassword(value);
+    // }
+
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
 
     public Password(String value) {
@@ -15,6 +28,14 @@ public class Password {
             throw new IllegalArgumentException("Invalid password");
         }
         this.value = hashPassword(value);
+    }
+
+    // Construtor para senhas já hashadas
+    public Password(String hashedValue, boolean isHashed) {
+        if (!isHashed) {
+            throw new IllegalArgumentException("Password must be hashed.");
+        }
+        this.value = hashedValue; // Recebe o hash diretamente
     }
 
     private String hashPassword(String password) {
