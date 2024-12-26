@@ -3,13 +3,13 @@ package com.userhub.userhub.domain.entities.user;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import com.userhub.userhub.domain.entities.base.BaseEntity;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.application.builders.user.UserBuilder;
 
 import com.userhub.userhub.domain.objetcValues.Login;
+import com.userhub.userhub.domain.objetcValues.Email;
 
 public class UserEntity extends BaseEntity implements UserInterface {
 
@@ -17,9 +17,7 @@ public class UserEntity extends BaseEntity implements UserInterface {
 
     private Login login;
 
-    private String email;
-
-    private String password;
+    private Email email;
 
     private Set<RoleEntity> roles;
 
@@ -28,7 +26,6 @@ public class UserEntity extends BaseEntity implements UserInterface {
         this.birthday = builder.getBirthday();
         this.login = builder.getLogin();
         this.email = builder.getEmail();
-        this.password = builder.getPassword();
         this.roles = builder.getRoles();
         this.validate();
     }
@@ -41,13 +38,10 @@ public class UserEntity extends BaseEntity implements UserInterface {
         return login;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public Set<RoleEntity> getRoles() {
         return roles;
@@ -79,18 +73,9 @@ public class UserEntity extends BaseEntity implements UserInterface {
         if (birthday == null)
             throw new IllegalArgumentException("Birthday cannot be null");
         // if (login == null || login.isEmpty())
-        //     throw new IllegalArgumentException("Login cannot be null or empty");
-        if (email == null || email.isEmpty() || !isValidEmail(email))
+        // throw new IllegalArgumentException("Login cannot be null or empty");
+        if (email == null || !email.isValidEmail())
             throw new IllegalArgumentException("Invalid email");
-        if (password == null || password.isEmpty())
-            throw new IllegalArgumentException("Password cannot be null or empty");
-    }
-
-    // Método auxiliar para validar o formato do e-mail
-    private boolean isValidEmail(String email) {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(email).matches();
     }
 
     @Override
@@ -101,7 +86,6 @@ public class UserEntity extends BaseEntity implements UserInterface {
                 ", birthday=" + birthday +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", active=" + isActive() +
                 ", createdAT=" + getCreatedAt() +
                 ", updatedAt=" + getUpdatedAt() +

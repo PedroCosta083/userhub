@@ -9,13 +9,13 @@ import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.application.builders.base.Builder;
 
 import com.userhub.userhub.domain.objetcValues.Login;
+import com.userhub.userhub.domain.objetcValues.Email;
 
 public class UserBuilder extends Builder<UserBuilder> {
 
     private LocalDate birthday;
     private Login login;
-    private String email;
-    private String password;
+    private Email email;
     private Set<RoleEntity> roles = new HashSet<>();
 
     public UserBuilder birthday(LocalDate birthday) {
@@ -28,13 +28,8 @@ public class UserBuilder extends Builder<UserBuilder> {
         return this;
     }
 
-    public UserBuilder email(String email) {
+    public UserBuilder email(Email email) {
         this.email = email;
-        return this;
-    }
-
-    public UserBuilder password(String password) {
-        this.password = password;
         return this;
     }
 
@@ -55,12 +50,8 @@ public class UserBuilder extends Builder<UserBuilder> {
         return login;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Set<RoleEntity> getRoles() {

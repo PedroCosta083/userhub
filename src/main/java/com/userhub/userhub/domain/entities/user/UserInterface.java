@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.userhub.userhub.domain.entities.base.BaseInterface;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
-
+import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.Login;
 
 public interface UserInterface extends BaseInterface {
@@ -14,9 +14,7 @@ public interface UserInterface extends BaseInterface {
 
     Login getLogin();
 
-    String getEmail();
-
-    String getPassword();
+    Email getEmail();
 
     Set<RoleEntity> getRoles();
 
