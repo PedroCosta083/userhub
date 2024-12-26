@@ -15,6 +15,10 @@ import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.infra.repository.roles.RoleRepository;
 import com.userhub.userhub.infra.repository.users.UserRepository;
 
+import com.userhub.userhub.domain.objetcValues.Login;
+import com.userhub.userhub.domain.objetcValues.Password;
+import com.userhub.userhub.domain.objetcValues.Email;
+
 import java.util.List;
 import java.util.Set;
 import java.time.LocalDate;
@@ -48,18 +52,16 @@ public class UserRepositoryTest {
         UserEntity user1 = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login("hyusenn")
-                .email("pedro@gmail.com")
-                .password("123123123")
+                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .email(new Email("pedro@gmail.com"))
                 .roles(roles)
                 .build();
         // user1.addRoles(roles);
         UserEntity user2 = new UserBuilder()
                 .name("Tiao Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login("tiao")
-                .email("tiao@gmail.com")
-                .password("123123123")
+                .login(new Login("tiao", new Password("Tiao1234")))
+                .email(new Email("tiao@gmail.com"))
                 .build();
         user2.addRole(role2);
         userRepository.create(user1);
@@ -80,17 +82,15 @@ public class UserRepositoryTest {
         UserEntity user = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login("hyusenn")
-                .email("pedro@gmail.com")
-                .password("123123123")
+                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .email(new Email("pedro@gmail.com"))
                 .build();
         userRepository.create(user);
         UserEntity foundUser = userRepository.searchById(user.getId());
         assertThat(foundUser).isNotNull();
         assertThat(foundUser.getId()).isEqualTo(user.getId());
         assertThat(foundUser.getName()).isEqualTo(user.getName());
-        assertThat(foundUser.getEmail()).isEqualTo(user.getEmail());
-
+        assertThat(foundUser.getEmail().getvalue()).isEqualTo(user.getEmail().getvalue());
     }
 
     @Test
@@ -99,9 +99,8 @@ public class UserRepositoryTest {
         UserEntity user = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login("hyusenn")
-                .email("pedro@gmail.com")
-                .password("123123123")
+                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .email(new Email("pedro@gmail.com"))
                 .build();
         userRepository.create(user);
         UserEntity updatedUser = new UserBuilder()
@@ -112,9 +111,8 @@ public class UserRepositoryTest {
                 .updatedAt(user.getUpdatedAt())
                 .deactivatedAt(user.getDeactivatedAt())
                 .birthday(user.getBirthday())
-                .login("troll")
+                .login(new Login("troll", new Password("Hyusenn123")))
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .build();
         userRepository.updateUser(updatedUser);
         UserEntity foundUser = userRepository.searchById(updatedUser.getId());
@@ -122,7 +120,7 @@ public class UserRepositoryTest {
         assertThat(foundUser.getId()).isEqualTo(user.getId());
         assertThat(foundUser.getName()).isEqualTo(user.getName());
         assertThat(foundUser.getEmail()).isEqualTo(user.getEmail());
-        assertThat(foundUser.getLogin()).isEqualTo("troll");
+        assertThat(foundUser.getLogin().getUsername()).isEqualTo("troll");
 
     }
 
@@ -138,7 +136,7 @@ public class UserRepositoryTest {
     public void testFindByEmail() {
         UserEntity user = userRepository.searchByEmail("pedro@gmail.com");
         assertThat(user).isNotNull();
-        assertThat(user.getEmail()).isEqualTo("pedro@gmail.com");
+        assertThat(user.getEmail().getvalue()).isEqualTo("pedro@gmail.com");
     }
 
     @Test
@@ -146,7 +144,7 @@ public class UserRepositoryTest {
     public void testFindByLogin() {
         UserEntity user = userRepository.searchByLogin("hyusenn");
         assertThat(user).isNotNull();
-        assertThat(user.getLogin()).isEqualTo("hyusenn");
+        assertThat(user.getLogin().getUsername()).isEqualTo("hyusenn");
     }
 
     @Test

@@ -38,8 +38,8 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
-    public UserEntity searchByLogin(String login) {
-        UserSchema userFinded = jpaUserRepository.findByLogin(login);
+    public UserEntity searchByLogin(String username) {
+        UserSchema userFinded = jpaUserRepository.findByUsername(username);
         return UserMapper.toDomain(userFinded);
     }
 

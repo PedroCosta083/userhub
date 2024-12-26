@@ -11,7 +11,7 @@ import com.userhub.userhub.infra.schemas.user.UserSchema;
 
 public interface JpaUserRepository extends JpaRepository<UserSchema, UUID> {
     // O Spring Data já fornece os métodos básicos (save, delete, findById, etc.)
-    UserSchema findByLogin(String login);
+    UserSchema findByUsername(String username);
 
     UserSchema findByEmail(String email);
 

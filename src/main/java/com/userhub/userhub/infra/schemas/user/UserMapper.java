@@ -10,9 +10,13 @@ import java.util.stream.Collectors;
 import com.userhub.userhub.infra.schemas.role.RoleSchema;
 import com.userhub.userhub.infra.schemas.role.RoleMapper;
 import com.userhub.userhub.application.builders.user.UserBuilder;
+import com.userhub.userhub.domain.objetcValues.Email;
+import com.userhub.userhub.domain.objetcValues.Login;
+import com.userhub.userhub.domain.objetcValues.Password;
 
 public class UserMapper {
     public static UserEntity toDomain(UserSchema schema) {
+
         Set<RoleEntity> roles = null;
         if (schema.getRoles() != null) {
             roles = schema.getRoles().stream()
@@ -20,18 +24,6 @@ public class UserMapper {
                     .collect(Collectors.toSet());
         }
 
-        // return new UserEntity(
-        // schema.getId(),
-        // schema.getName(),
-        // schema.getActive(),
-        // schema.getCreatedAt(),
-        // schema.getUpdatedAt(),
-        // schema.getDeactivatedAt(),
-        // schema.getBirthday(),
-        // schema.getLogin(),
-        // schema.getEmail(),
-        // schema.getPassword(),
-        // roles);
         UserEntity user = new UserBuilder()
                 .id(schema.getId())
                 .name(schema.getName())
@@ -40,9 +32,8 @@ public class UserMapper {
                 .updatedAt(schema.getUpdatedAt())
                 .deactivatedAt(schema.getDeactivatedAt())
                 .birthday(schema.getBirthday())
-                .login(schema.getLogin())
-                .email(schema.getEmail())
-                .password(schema.getPassword())
+                .login(new Login(schema.getUsername(), new Password(schema.getPassword(), true)))
+                .email(new Email(schema.getEmail()))
                 .roles(roles)
                 .build();
         return user;
@@ -61,6 +52,7 @@ public class UserMapper {
                     .map(RoleMapper::toSchema)
                     .collect(Collectors.toList());
         }
+
         return UserSchema.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -69,9 +61,9 @@ public class UserMapper {
                 .updatedAt(entity.getUpdatedAt())
                 .deactivatedAt(entity.getDeactivatedAt())
                 .birthday(entity.getBirthday())
-                .login(entity.getLogin())
-                .email(entity.getEmail())
-                .password(entity.getPassword())
+                .username(entity.getLogin().getUsername())
+                .email(entity.getEmail().getvalue())
+                .password(entity.getLogin().getPassword().getValue())
                 .roles(roles)
                 .build();
     }

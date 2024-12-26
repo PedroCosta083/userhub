@@ -29,7 +29,7 @@ public class UserSchema extends BaseSchema {
 
     private LocalDate birthday;
 
-    private String login;
+    private String username;
 
     private String email;
 
