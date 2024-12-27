@@ -14,9 +14,10 @@ import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.infra.repository.roles.RoleRepository;
 import com.userhub.userhub.infra.repository.users.UserRepository;
-
+import com.userhub.userhub.infra.services.BadWordService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
+import com.userhub.userhub.domain.objetcValues.UserName;
 import com.userhub.userhub.domain.objetcValues.Email;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class UserRepositoryTest {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    private BadWordService badWordService;
 
     @BeforeEach
     public void setUp() {
@@ -52,7 +55,9 @@ public class UserRepositoryTest {
         UserEntity user1 = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .login(new Login(
+                        new UserName("hyusenn", null),
+                        new Password("Hyusenn123")))
                 .email(new Email("pedro@gmail.com"))
                 .roles(roles)
                 .build();
@@ -60,7 +65,9 @@ public class UserRepositoryTest {
         UserEntity user2 = new UserBuilder()
                 .name("Tiao Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login(new Login("tiaosad", new Password("Tiao1234")))
+                .login(new Login(
+                        new UserName("tiaosad", null),
+                        new Password("Tiao1234")))
                 .email(new Email("tiao@gmail.com"))
                 .build();
         user2.addRole(role2);
@@ -82,7 +89,9 @@ public class UserRepositoryTest {
         UserEntity user = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .login(new Login(
+                        new UserName("hyusenn", badWordService.getBadWords()),
+                        new Password("Hyusenn123")))
                 .email(new Email("pedro@gmail.com"))
                 .build();
         userRepository.create(user);
@@ -99,7 +108,9 @@ public class UserRepositoryTest {
         UserEntity user = new UserBuilder()
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
-                .login(new Login("hyusenn", new Password("Hyusenn123")))
+                .login(new Login(
+                        new UserName("hyusenn", badWordService.getBadWords()),
+                        new Password("Hyusenn123")))
                 .email(new Email("pedro@gmail.com"))
                 .build();
         userRepository.create(user);
@@ -111,7 +122,9 @@ public class UserRepositoryTest {
                 .updatedAt(user.getUpdatedAt())
                 .deactivatedAt(user.getDeactivatedAt())
                 .birthday(user.getBirthday())
-                .login(new Login("troll", new Password("Hyusenn123")))
+                .login(new Login(
+                        new UserName("troll", badWordService.getBadWords()),
+                        new Password("Hyusenn123")))
                 .email(user.getEmail())
                 .build();
         userRepository.updateUser(updatedUser);

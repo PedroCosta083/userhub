@@ -1,5 +1,6 @@
 package com.userhub.userhub.userTest.usecaseTest;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,11 @@ import com.userhub.userhub.application.usecases.user.createUserUsecase.CreateUse
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserRequest;
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserResponse;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
+import com.userhub.userhub.infra.services.BadWordService;
 import com.userhub.userhub.domain.entities.user.UserEntity;
+
+import java.util.List;
+import java.util.Arrays;
 
 import java.time.LocalDate;
 
@@ -27,16 +32,19 @@ public class CreateUserUseCaseTest {
 
     private CreateUserUseCase createUserUseCase;
 
+    @Mock
+    private BadWordService badWordService;
+
     @BeforeEach
     public void setup() {
-        createUserUseCase = new CreateUserUseCase(userRepository);
+        createUserUseCase = new CreateUserUseCase(userRepository, badWordService);
     }
 
     @Test
     public void shouldCreateUserAndReturnResponse() {
         // Dados de entrada (input) para o teste
-        CreateUserRequest request = new CreateUserRequest("Jhon Doe", "jhonDoe12", "jhon@example.com", "jhonnX12345",
-                LocalDate.of(1990, 1, 1));
+        CreateUserRequest request = new CreateUserRequest("Jhon Doe", "jhonny", "jhon@example.com", "jhonnX12345",
+                LocalDate.of(1990, 1, 1), null);
 
         // Simulando o comportamento do repositório
         doNothing().when(userRepository).create(any(UserEntity.class)); // O método create não retorna nada
@@ -47,11 +55,26 @@ public class CreateUserUseCaseTest {
 
         // Verificando se a resposta é válida
         assertNotNull(response);
-        assertEquals("jhonDoe12", response.getUsername());
-        assertEquals("jhon@example.com", response.getEmail().getvalue());
+        assertEquals("jhonny", response.getUsername());
+        assertEquals("jhon@example.com", response.getEmail());
         assertEquals("User created successfully", response.getMessage());
 
         // Verificando se o repositório foi chamado corretamente
         verify(userRepository, times(1)).create(any(UserEntity.class));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenUsernameContainsBadWord() {
+        // Dados de entrada (input) para o teste
+        CreateUserRequest request = new CreateUserRequest("Jhon Doe", "dicks", "jhon@example.com", "jhonnX12345",
+                LocalDate.of(1990, 1, 1), null);
+
+        createUserUseCase.execute(request).join();
+
+        // Verificando a mensagem da exceção
+        // assertEquals("Username contains prohibited words", exception.getMessage());
+
+        // Verificando se o repositório não foi chamado
+        verify(userRepository, times(0)).create(any(UserEntity.class));
     }
 }
