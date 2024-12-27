@@ -7,20 +7,7 @@ import java.security.MessageDigest;
 
 public class Password {
     private final String value;
-
-    // private static final Pattern PASSWORD_PATTERN =
-    // Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
-
-    // public Password(String value) {
-    // // if (value == null || !PASSWORD_PATTERN.matcher(value).matches()) {
-    // // throw new IllegalArgumentException("Invalid password");
-    // // }
-    // if (value == null || value.length() < 8) {
-    // throw new IllegalArgumentException("Invalid password");
-    // }
-    // this.value = hashPassword(value);
-    // }
-
+    
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
 
     public Password(String value) {

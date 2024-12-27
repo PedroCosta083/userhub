@@ -12,6 +12,7 @@ import com.userhub.userhub.infra.schemas.role.RoleMapper;
 import com.userhub.userhub.application.builders.user.UserBuilder;
 import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.Login;
+import com.userhub.userhub.domain.objetcValues.UserName;
 import com.userhub.userhub.domain.objetcValues.Password;
 
 public class UserMapper {
@@ -32,7 +33,9 @@ public class UserMapper {
                 .updatedAt(schema.getUpdatedAt())
                 .deactivatedAt(schema.getDeactivatedAt())
                 .birthday(schema.getBirthday())
-                .login(new Login(schema.getUsername(), new Password(schema.getPassword(), true)))
+                .login(new Login(
+                    new UserName(schema.getUsername(), null), 
+                    new Password(schema.getPassword(), true)))
                 .email(new Email(schema.getEmail()))
                 .roles(roles)
                 .build();
@@ -61,7 +64,7 @@ public class UserMapper {
                 .updatedAt(entity.getUpdatedAt())
                 .deactivatedAt(entity.getDeactivatedAt())
                 .birthday(entity.getBirthday())
-                .username(entity.getLogin().getUsername())
+                .username(entity.getLogin().getUsername().getValue())
                 .email(entity.getEmail().getvalue())
                 .password(entity.getLogin().getPassword().getValue())
                 .roles(roles)
