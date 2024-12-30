@@ -32,13 +32,4 @@ public class BaseSchema {
     private LocalDate updatedAt;
 
     private LocalDate deactivatedAt;
-
-    // public BaseSchema(UUID id, String name, LocalDate createdAT, LocalDate
-    // updatedAt, LocalDate deactivatedAt) {
-    // this.id = id;
-    // this.name = name;
-    // this.createdAT = createdAT;
-    // this.updatedAt = updatedAt;
-    // this.deactivatedAt = deactivatedAt;
-    // }
 }

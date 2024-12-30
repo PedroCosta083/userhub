@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.userhub.userhub.application.builders.role.RoleBuilder;
-import com.userhub.userhub.application.builders.user.UserBuilder;
+import com.userhub.userhub.application.services.BadWordService;
+import com.userhub.userhub.domain.builders.role.RoleBuilder;
+import com.userhub.userhub.domain.builders.user.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.infra.repository.roles.RoleRepository;
 import com.userhub.userhub.infra.repository.users.UserRepository;
-import com.userhub.userhub.infra.services.BadWordService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
 import com.userhub.userhub.domain.objetcValues.UserName;
@@ -23,6 +23,8 @@ import com.userhub.userhub.domain.objetcValues.Email;
 import java.util.List;
 import java.util.Set;
 import java.time.LocalDate;
+
+import java.io.IOException;
 
 @SpringBootTest
 public class UserRepositoryTest {
@@ -34,6 +36,10 @@ public class UserRepositoryTest {
     private RoleRepository roleRepository;
 
     private BadWordService badWordService;
+
+    public UserRepositoryTest() throws IOException {
+        this.badWordService = new BadWordService();
+    }
 
     @BeforeEach
     public void setUp() {
@@ -56,7 +62,7 @@ public class UserRepositoryTest {
                 .name("Pedro Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
                 .login(new Login(
-                        new UserName("hyusenn", null),
+                        new UserName("hyusenn", badWordService.getBadWords()),
                         new Password("Hyusenn123")))
                 .email(new Email("pedro@gmail.com"))
                 .roles(roles)
@@ -66,7 +72,7 @@ public class UserRepositoryTest {
                 .name("Tiao Costa")
                 .birthday(LocalDate.of(2003, 04, 12))
                 .login(new Login(
-                        new UserName("tiaosad", null),
+                        new UserName("tiaosad", badWordService.getBadWords()),
                         new Password("Tiao1234")))
                 .email(new Email("tiao@gmail.com"))
                 .build();

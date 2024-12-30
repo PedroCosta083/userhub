@@ -7,12 +7,16 @@ import java.security.MessageDigest;
 
 public class Password {
     private final String value;
-    
+
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
 
     public Password(String value) {
-        if (value == null || !PASSWORD_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException("Invalid password");
+        if (value == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        if (!PASSWORD_PATTERN.matcher(value).matches()) {
+            throw new IllegalArgumentException(
+                    "Password must be at least 8 characters long, contain at least one digit, one lowercase letter, and one uppercase letter");
         }
         this.value = hashPassword(value);
     }

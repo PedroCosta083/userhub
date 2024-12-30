@@ -8,18 +8,19 @@ import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.Crea
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserResponse;
 
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
+import com.userhub.userhub.domain.builders.role.RoleBuilder;
+import com.userhub.userhub.domain.builders.user.UserBuilder;
 import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
-import com.userhub.userhub.application.builders.role.RoleBuilder;
-import com.userhub.userhub.application.builders.user.UserBuilder;
-
+import com.userhub.userhub.application.services.BadWordService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
 import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.UserName;
-import com.userhub.userhub.infra.services.BadWordService;
+
+import java.io.IOException;
 
 public class CreateUserUseCase implements BaseUseCaseInterface<CreateUserRequest, CreateUserResponse> {
 
@@ -27,17 +28,18 @@ public class CreateUserUseCase implements BaseUseCaseInterface<CreateUserRequest
 
     private final BadWordService badWordService;
 
-    public CreateUserUseCase(UserRepositoryInterface userRepository, BadWordService badWordService) {
+    public CreateUserUseCase(UserRepositoryInterface userRepository) throws IOException {
         this.userRepository = userRepository;
-        this.badWordService = badWordService;
+        this.badWordService = new BadWordService();
     }
+
+    // public CreateUserUseCase(UserRepositoryInterface userRepository) {
+    // this.userRepository = userRepository;
+    // }
 
     @Override
     public CompletableFuture<CreateUserResponse> execute(CreateUserRequest input) {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("CreateUserUseCase BadWords: " + badWordService.getBadWords());
-            System.out.println("CreateUserUseCase Roles: " + input.getRoles());
-            // System.out.println("CreateUserUseCase BadWords: " + badWordService.);
             UserEntity userEntity = new UserBuilder()
                     .name(input.getName())
                     .email(new Email(input.getEmail()))

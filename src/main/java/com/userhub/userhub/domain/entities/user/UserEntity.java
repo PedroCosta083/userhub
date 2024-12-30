@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.userhub.userhub.domain.builders.user.UserBuilder;
 import com.userhub.userhub.domain.entities.base.BaseEntity;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
-import com.userhub.userhub.application.builders.user.UserBuilder;
-
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Email;
 

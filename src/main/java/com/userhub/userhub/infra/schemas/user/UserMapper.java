@@ -1,5 +1,6 @@
 package com.userhub.userhub.infra.schemas.user;
 
+import com.userhub.userhub.domain.builders.user.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 
@@ -9,7 +10,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import com.userhub.userhub.infra.schemas.role.RoleSchema;
 import com.userhub.userhub.infra.schemas.role.RoleMapper;
-import com.userhub.userhub.application.builders.user.UserBuilder;
 import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.UserName;

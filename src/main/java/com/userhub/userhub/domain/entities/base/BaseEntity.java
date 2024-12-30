@@ -2,7 +2,8 @@ package com.userhub.userhub.domain.entities.base;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import com.userhub.userhub.application.builders.base.Builder;
+
+import com.userhub.userhub.domain.builders.base.Builder;
 
 public class BaseEntity implements BaseInterface {
 

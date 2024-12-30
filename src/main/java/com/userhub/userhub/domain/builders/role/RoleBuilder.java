@@ -1,6 +1,6 @@
-package com.userhub.userhub.application.builders.role;
+package com.userhub.userhub.domain.builders.role;
 
-import com.userhub.userhub.application.builders.base.Builder;
+import com.userhub.userhub.domain.builders.base.Builder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 
 public class RoleBuilder extends Builder<RoleBuilder> {

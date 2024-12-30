@@ -1,4 +1,4 @@
-package com.userhub.userhub.application.builders.base;
+package com.userhub.userhub.domain.builders.base;
 
 import java.time.LocalDate;
 import java.util.UUID;

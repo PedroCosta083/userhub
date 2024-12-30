@@ -1,5 +1,4 @@
-// filepath: /c:/Users/pedro.barros/Desktop/Estudos/userhub/src/main/java/com/userhub/userhub/infra/services/BadWordService.java
-package com.userhub.userhub.infra.services;
+package com.userhub.userhub.application.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -29,7 +28,9 @@ public class BadWordService {
         Map<String, List<String>> map = objectMapper.readValue(content, new TypeReference<Map<String, List<String>>>() {
         });
         logger.debug("BadWordService - Parsed Map: {}", map); // Log do mapa resultante
-        return map.get("badwords");
+        List<String> badWordsList = map.get("badwords");
+        logger.debug("BadWordService - Bad Words List: {}", badWordsList); // Log da lista de palavras proibidas
+        return badWordsList;
     }
 
     public List<String> getBadWords() {

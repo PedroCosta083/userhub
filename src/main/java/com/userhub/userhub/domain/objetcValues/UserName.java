@@ -26,7 +26,9 @@ public class UserName {
         if (!isValidUsernameFormat(value)) {
             throw new IllegalArgumentException("Username must be alphanumeric and cannot contain special characters");
         }
-
+        if (badWords == null) {
+            throw new IllegalArgumentException("Bad words list must not be null");
+        }
         if (containsBadWord(value, badWords)) {
             throw new IllegalArgumentException("Username contains prohibited words");
         }
