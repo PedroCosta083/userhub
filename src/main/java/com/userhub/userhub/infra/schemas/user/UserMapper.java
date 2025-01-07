@@ -1,6 +1,7 @@
 package com.userhub.userhub.infra.schemas.user;
 
-import com.userhub.userhub.domain.builders.user.UserBuilder;
+import com.userhub.userhub.application.services.BadWordsLoaderService;
+import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 
@@ -8,15 +9,37 @@ import com.userhub.userhub.domain.entities.user.UserEntity;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
 import com.userhub.userhub.infra.schemas.role.RoleSchema;
+
+import java.io.IOException;
+
 import com.userhub.userhub.infra.schemas.role.RoleMapper;
 import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.UserName;
 import com.userhub.userhub.domain.objetcValues.Password;
 
+@Component
 public class UserMapper {
+
+    private static BadWordsLoaderService badWordService;
+
+    public UserMapper(BadWordsLoaderService badWordService) {
+        UserMapper.badWordService = badWordService;
+    }
+
     public static UserEntity toDomain(UserSchema schema) {
+
+        List<String> badWords = null;
+
+        try {
+            badWords = badWordService.loadBadWords("src/main/resources/config/badwords.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Set<RoleEntity> roles = null;
         if (schema.getRoles() != null) {
@@ -34,8 +57,8 @@ public class UserMapper {
                 .deactivatedAt(schema.getDeactivatedAt())
                 .birthday(schema.getBirthday())
                 .login(new Login(
-                    new UserName(schema.getUsername(), null), 
-                    new Password(schema.getPassword(), true)))
+                        new UserName(schema.getUsername(), badWords),
+                        new Password(schema.getPassword(), true)))
                 .email(new Email(schema.getEmail()))
                 .roles(roles)
                 .build();

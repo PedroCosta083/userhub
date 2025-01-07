@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class BadWordsLoaderService {
     private final ObjectMapper objectMapper;
 

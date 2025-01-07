@@ -10,8 +10,8 @@ import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.Crea
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserResponse;
 
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
-import com.userhub.userhub.domain.builders.role.RoleBuilder;
-import com.userhub.userhub.domain.builders.user.UserBuilder;
+import com.userhub.userhub.domain.builders.RoleBuilder;
+import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 
 import com.userhub.userhub.domain.entities.role.RoleEntity;
@@ -41,7 +41,6 @@ public class CreateUserUseCase implements BaseUseCaseInterface<CreateUserRequest
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("Bad words: " + badWords);
             validateRequest(input);
             UserEntity userEntity = new UserBuilder()
                     .name(input.getName())

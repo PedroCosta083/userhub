@@ -1,10 +1,9 @@
-package com.userhub.userhub.domain.builders.user;
+package com.userhub.userhub.domain.builders;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.userhub.userhub.domain.builders.base.Builder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.domain.objetcValues.Login;
