@@ -1,6 +1,6 @@
 package com.userhub.userhub.domain.entities.role;
 
-import com.userhub.userhub.domain.builders.role.RoleBuilder;
+import com.userhub.userhub.domain.builders.RoleBuilder;
 import com.userhub.userhub.domain.entities.base.BaseEntity;
 
 // import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS;
+package com.userhub.userhub.application.usecases.user.create.DTOS;
 
 import java.util.UUID;
 

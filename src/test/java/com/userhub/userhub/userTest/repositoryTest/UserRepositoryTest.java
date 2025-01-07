@@ -10,13 +10,13 @@ import org.mockito.Mock;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.userhub.userhub.application.services.BadWordsLoaderService;
 import com.userhub.userhub.domain.builders.RoleBuilder;
 import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.infra.repository.roles.RoleRepository;
 import com.userhub.userhub.infra.repository.users.UserRepository;
+import com.userhub.userhub.infra.services.BadWordsLoaderService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
 import com.userhub.userhub.domain.objetcValues.UserName;

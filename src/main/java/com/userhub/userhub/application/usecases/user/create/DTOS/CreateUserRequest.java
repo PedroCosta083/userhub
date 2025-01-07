@@ -1,4 +1,4 @@
-package com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS;
+package com.userhub.userhub.application.usecases.user.create.DTOS;
 
 import java.time.LocalDate;
 
@@ -8,17 +8,14 @@ public class CreateUserRequest {
     private String email;
     private LocalDate birthday;
     private String name;
-    private String[] roles;
     private String badWordsFilePath;
 
-    public CreateUserRequest(String name, String username, String email, String password, LocalDate birthday,
-            String[] roles) {
+    public CreateUserRequest(String name, String username, String email, String password, LocalDate birthday) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.birthday = birthday;
         this.name = name;
-        this.roles = roles;
         this.badWordsFilePath = "src/main/resources/config/badwords.json";
     }
 
@@ -42,14 +39,8 @@ public class CreateUserRequest {
         return name;
     }
 
-    public String[] getRoles() {
-        return roles;
-    }
-
     public String getBadWordsFilePath() {
         return badWordsFilePath;
     }
-
-    
 
 }

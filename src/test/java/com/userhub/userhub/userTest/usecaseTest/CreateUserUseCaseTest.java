@@ -13,11 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.userhub.userhub.application.services.BadWordsLoaderService;
-import com.userhub.userhub.application.usecases.user.createUserUsecase.CreateUserUseCase;
-import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserRequest;
-import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserResponse;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
+import com.userhub.userhub.infra.services.BadWordsLoaderService;
+import com.userhub.userhub.application.usecases.user.create.CreateUserUseCase;
+import com.userhub.userhub.application.usecases.user.create.DTOS.CreateUserRequest;
+import com.userhub.userhub.application.usecases.user.create.DTOS.CreateUserResponse;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class CreateUserUseCaseTest {
     public void shouldCreateUserAndReturnResponse() {
         // Dados de entrada (input) para o teste
         CreateUserRequest request = new CreateUserRequest("Jhon Doe", "jhonny", "jhon@example.com", "jhonnX12345",
-                LocalDate.of(1990, 1, 1), null);
+                LocalDate.of(1990, 1, 1));
 
         // Simulando o comportamento do repositório
         doNothing().when(userRepository).create(any(UserEntity.class)); // O método create não retorna nada
@@ -63,7 +63,7 @@ public class CreateUserUseCaseTest {
     public void shouldThrowExceptionWhenUsernameContainsBadWord() throws IOException {
         // Dados de entrada (input) para o teste
         CreateUserRequest request = new CreateUserRequest("Jhon Doe", "dicks", "jhon@example.com", "jhonnX12345",
-                LocalDate.of(1990, 1, 1), null);
+                LocalDate.of(1990, 1, 1));
 
         // Executando o use case e capturando a exceção
         CompletionException exception = assertThrows(CompletionException.class, () -> {
@@ -82,7 +82,7 @@ public class CreateUserUseCaseTest {
     public void shouldThrowExceptionWhenPasswordIsInvalid() {
         // Dados de entrada (input) para o teste
         CreateUserRequest request = new CreateUserRequest("Jhon Doe", "jhonny", "jhon@example.com", "123",
-                LocalDate.of(1990, 1, 1), null);
+                LocalDate.of(1990, 1, 1));
 
         // Executando o use case e capturando a exceção
         CompletionException exception = assertThrows(CompletionException.class, () -> {
@@ -104,7 +104,7 @@ public class CreateUserUseCaseTest {
     public void shouldThrowExceptionWhenBirthdayIsNull() {
         // Dados de entrada (input) para o teste
         CreateUserRequest request = new CreateUserRequest("Jhon Doe", "jhonny", "jhon@example.com", "jhonnX12345",
-                null, null);
+                null);
 
         // Executando o use case e capturando a exceção
         CompletionException exception = assertThrows(CompletionException.class, () -> {

@@ -1,6 +1,5 @@
 package com.userhub.userhub.infra.schemas.user;
 
-import com.userhub.userhub.application.services.BadWordsLoaderService;
 import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.userhub.userhub.infra.schemas.role.RoleSchema;
+import com.userhub.userhub.infra.services.BadWordsLoaderService;
 
 import java.io.IOException;
 

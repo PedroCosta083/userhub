@@ -1,4 +1,4 @@
-package com.userhub.userhub.application.services;
+package com.userhub.userhub.infra.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.userhub.userhub.domain.entities.badwords.BadWordsList;
