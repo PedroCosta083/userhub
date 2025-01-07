@@ -3,13 +3,13 @@ package com.userhub.userhub.application.usecases.user.active;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
-import com.userhub.userhub.application.usecases.user.active.DTOS.ActiveUserRequest;
-import com.userhub.userhub.application.usecases.user.active.DTOS.ActiveUserResponse;
+import com.userhub.userhub.application.usecases.user.DTOS.requests.EntityIdRequest;
+import com.userhub.userhub.application.usecases.user.DTOS.responses.ActiveUserResponse;
 import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
 
-public class ActiveUserUseCase implements BaseUseCaseInterface<ActiveUserRequest, ActiveUserResponse> {
+public class ActiveUserUseCase implements BaseUseCaseInterface<EntityIdRequest, ActiveUserResponse> {
     private static final Logger LOGGER = Logger.getLogger(ActiveUserUseCase.class.getName());
     private final UserRepositoryInterface userRepository;
 
@@ -18,7 +18,7 @@ public class ActiveUserUseCase implements BaseUseCaseInterface<ActiveUserRequest
     }
 
     @Override
-    public CompletableFuture<ActiveUserResponse> execute(ActiveUserRequest input) {
+    public CompletableFuture<ActiveUserResponse> execute(EntityIdRequest input) {
         if (input == null) {
             throw new IllegalArgumentException("Input cannot be null");
         }

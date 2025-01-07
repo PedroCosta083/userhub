@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
-import com.userhub.userhub.application.usecases.user.create.DTOS.CreateUserRequest;
-import com.userhub.userhub.application.usecases.user.create.DTOS.CreateUserResponse;
+import com.userhub.userhub.application.usecases.user.DTOS.requests.CreateUserRequest;
+import com.userhub.userhub.application.usecases.user.DTOS.responses.CreateUserResponse;
 import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 

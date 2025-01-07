@@ -17,7 +17,7 @@ public interface UserRepositoryInterface {
     
     UserEntity searchByLogin(String login);
     
-    List<UserEntity> searchByRole(String roleName);
+    List<UserEntity> searchByRoleName(String roleName);
 
     List<UserEntity> searchAll();
     

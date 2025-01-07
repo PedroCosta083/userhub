@@ -1,6 +1,8 @@
-package com.userhub.userhub.application.usecases.user.findAll.DTOS;
+package com.userhub.userhub.application.usecases.user.DTOS.responses;
 
 import java.util.List;
+
+import com.userhub.userhub.application.usecases.user.DTOS.requests.FindAllUserRequest;
 
 public class FindAllUsersResponse {
     private List<FindAllUserRequest> users;

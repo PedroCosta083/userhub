@@ -177,7 +177,7 @@ public class UserRepositoryTest {
         @Test
         @Transactional
         public void testFindByRole() {
-                List<UserEntity> admins = userRepository.searchByRole("Admin");
+                List<UserEntity> admins = userRepository.searchByRoleName("Admin");
                 assertThat(admins).hasSize(1);
                 assertThat(admins.get(0).getRoles().stream().anyMatch(role -> role.getName().equals("Admin"))).isTrue();
         }

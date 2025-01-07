@@ -1,4 +1,4 @@
-package com.userhub.userhub.application.usecases.user.create.DTOS;
+package com.userhub.userhub.application.usecases.user.DTOS.requests;
 
 import java.time.LocalDate;
 

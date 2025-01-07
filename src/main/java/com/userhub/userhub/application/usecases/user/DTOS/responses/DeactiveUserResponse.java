@@ -1,14 +1,14 @@
-package com.userhub.userhub.application.usecases.user.active.DTOS;
+package com.userhub.userhub.application.usecases.user.DTOS.responses;
 
 import java.util.UUID;
 
-public class ActiveUserResponse {
+public class DeactiveUserResponse {
     private final UUID userId;
     private final String userName;
     private final boolean isActive;
     private final String message;
 
-    public ActiveUserResponse(UUID userId, String userName, boolean isActive, String message) {
+    public DeactiveUserResponse(UUID userId, String userName, boolean isActive, String message) {
         this.userId = userId;
         this.userName = userName;
         this.isActive = isActive;

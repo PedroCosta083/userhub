@@ -1,9 +1,9 @@
-package com.userhub.userhub.application.usecases.user.findAll.DTOS;
+package com.userhub.userhub.application.usecases.user.DTOS.responses;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class FindAllUserRequest {
+public class FindUserResponse {
 
     private UUID id;
     private String name;
@@ -12,9 +12,10 @@ public class FindAllUserRequest {
     private String email;
     private LocalDate birthday;
     private LocalDate updatedAt;
+    private String message;
 
-    public FindAllUserRequest(UUID id, String name, String username, boolean active, String email, LocalDate birthday,
-            LocalDate updatedAt) {
+    public FindUserResponse(UUID id, String name, String username, boolean active, String email, LocalDate birthday,
+            LocalDate updatedAt, String message) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -22,6 +23,7 @@ public class FindAllUserRequest {
         this.email = email;
         this.birthday = birthday;
         this.updatedAt = updatedAt;
+        this.message = message;
     }
 
     public UUID getId() {
@@ -50,6 +52,10 @@ public class FindAllUserRequest {
 
     public LocalDate getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
 }

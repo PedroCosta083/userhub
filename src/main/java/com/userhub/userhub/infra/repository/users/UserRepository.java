@@ -44,7 +44,7 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
-    public List<UserEntity> searchByRole(String roleName) {
+    public List<UserEntity> searchByRoleName(String roleName) {
         List<UserSchema> userSchemas = jpaUserRepository.findByRoles_name(roleName);
         return UserMapper.toDomainList(userSchemas);
     }
