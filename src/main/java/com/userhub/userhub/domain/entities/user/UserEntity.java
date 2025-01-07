@@ -77,14 +77,14 @@ public class UserEntity extends BaseEntity implements UserInterface {
         return "UserEntitie {" + '\n' +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
-                ", birthday=" + birthday +
-                ", login='" + login + '\'' +
+                ", birthday=" + getBirthday() +
+                ", login='" + getLogin() + '\'' +
                 ", email='" + email + '\'' +
                 ", active=" + isActive() +
                 ", createdAT=" + getCreatedAt() +
                 ", updatedAt=" + getUpdatedAt() +
                 ", deactivatedAt=" + getDeactivatedAt() +
-                ", roles=" + roles +
+                ", roles=" + getRoles() +
                 '}';
     }
 }

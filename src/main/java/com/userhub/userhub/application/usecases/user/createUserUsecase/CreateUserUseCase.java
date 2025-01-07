@@ -1,5 +1,7 @@
 package com.userhub.userhub.application.usecases.user.createUserUsecase;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -14,37 +16,38 @@ import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
-import com.userhub.userhub.application.services.BadWordService;
+import com.userhub.userhub.application.services.BadWordsLoaderService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
 import com.userhub.userhub.domain.objetcValues.Email;
 import com.userhub.userhub.domain.objetcValues.UserName;
 
-import java.io.IOException;
-
 public class CreateUserUseCase implements BaseUseCaseInterface<CreateUserRequest, CreateUserResponse> {
 
     private final UserRepositoryInterface userRepository;
+    private final BadWordsLoaderService badWordService;
 
-    private final BadWordService badWordService;
-
-    public CreateUserUseCase(UserRepositoryInterface userRepository) throws IOException {
+    public CreateUserUseCase(UserRepositoryInterface userRepository, BadWordsLoaderService badWordService) {
         this.userRepository = userRepository;
-        this.badWordService = new BadWordService();
+        this.badWordService = badWordService;
     }
-
-    // public CreateUserUseCase(UserRepositoryInterface userRepository) {
-    // this.userRepository = userRepository;
-    // }
 
     @Override
     public CompletableFuture<CreateUserResponse> execute(CreateUserRequest input) {
         return CompletableFuture.supplyAsync(() -> {
+            List<String> badWords = null;
+            try {
+                badWords = badWordService.loadBadWords(input.getBadWordsFilePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Bad words: " + badWords);
+            validateRequest(input);
             UserEntity userEntity = new UserBuilder()
                     .name(input.getName())
                     .email(new Email(input.getEmail()))
                     .login(new Login(
-                            new UserName(input.getUsername(), badWordService.getBadWords()),
+                            new UserName(input.getUsername(), badWords),
                             new Password(input.getPassword())))
                     .birthday(input.getBirthday())
                     .build();
@@ -66,6 +69,26 @@ public class CreateUserUseCase implements BaseUseCaseInterface<CreateUserRequest
                     "User created successfully");
         });
 
+    }
+
+    private void validateRequest(CreateUserRequest input) {
+
+        if (input.getName() == null || input.getName().isBlank()) {
+            throw new IllegalArgumentException("Name is required");
+        }
+        if (input.getEmail() == null || input.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+        if (input.getUsername() == null || input.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username is required");
+        }
+        if (input.getPassword() == null || input.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Password is required");
+        }
+        if (input.getBadWordsFilePath() == null || input.getBadWordsFilePath().isBlank()) {
+            throw new IllegalArgumentException("Bad words file path is required");
+
+        }
     }
 
 }

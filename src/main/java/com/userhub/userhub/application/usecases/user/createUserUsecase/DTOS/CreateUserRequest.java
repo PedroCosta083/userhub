@@ -9,6 +9,7 @@ public class CreateUserRequest {
     private LocalDate birthday;
     private String name;
     private String[] roles;
+    private String badWordsFilePath;
 
     public CreateUserRequest(String name, String username, String email, String password, LocalDate birthday,
             String[] roles) {
@@ -18,6 +19,7 @@ public class CreateUserRequest {
         this.birthday = birthday;
         this.name = name;
         this.roles = roles;
+        this.badWordsFilePath = "src/main/resources/config/badwords.json";
     }
 
     public String getUsername() {
@@ -42,6 +44,10 @@ public class CreateUserRequest {
 
     public String[] getRoles() {
         return roles;
+    }
+
+    public String getBadWordsFilePath() {
+        return badWordsFilePath;
     }
 
     

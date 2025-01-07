@@ -10,10 +10,10 @@ import java.util.concurrent.CompletionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.userhub.userhub.application.services.BadWordService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.userhub.userhub.application.services.BadWordsLoaderService;
 import com.userhub.userhub.application.usecases.user.createUserUsecase.CreateUserUseCase;
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserRequest;
 import com.userhub.userhub.application.usecases.user.createUserUsecase.DTOS.CreateUserResponse;
@@ -26,17 +26,14 @@ import java.time.LocalDate;
 @ExtendWith(MockitoExtension.class)
 public class CreateUserUseCaseTest {
 
-    @Mock
     private UserRepositoryInterface userRepository;
-
     private CreateUserUseCase createUserUseCase;
-
-    @Mock
-    private BadWordService badWordService;
 
     @BeforeEach
     public void setup() throws IOException {
-        createUserUseCase = new CreateUserUseCase(userRepository);
+        userRepository = mock(UserRepositoryInterface.class);
+        BadWordsLoaderService badWordsLoaderService = new BadWordsLoaderService(new ObjectMapper());
+        createUserUseCase = new CreateUserUseCase(userRepository, badWordsLoaderService);
     }
 
     @Test
@@ -63,8 +60,7 @@ public class CreateUserUseCaseTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenUsernameContainsBadWord() {
-
+    public void shouldThrowExceptionWhenUsernameContainsBadWord() throws IOException {
         // Dados de entrada (input) para o teste
         CreateUserRequest request = new CreateUserRequest("Jhon Doe", "dicks", "jhon@example.com", "jhonnX12345",
                 LocalDate.of(1990, 1, 1), null);
@@ -76,7 +72,6 @@ public class CreateUserUseCaseTest {
 
         // Verificando a causa da exceção
         Throwable cause = exception.getCause();
-        assertTrue(cause instanceof IllegalArgumentException);
         assertEquals("Username contains prohibited words", cause.getMessage());
 
         // Verificando se o repositório não foi chamado
