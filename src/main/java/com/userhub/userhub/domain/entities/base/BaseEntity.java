@@ -63,6 +63,10 @@ public class BaseEntity implements BaseInterface {
         this.deactivatedAt = LocalDate.now();
     }
 
+    protected void updateTimestamp() {
+        this.updatedAt = LocalDate.now();
+    }
+
     public void validate() {
         if (this.id == null) {
             throw new IllegalArgumentException("ID is required");

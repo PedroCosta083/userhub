@@ -51,12 +51,14 @@ public class UserEntity extends BaseEntity implements UserInterface {
             this.roles = new HashSet<>();
         }
         this.roles.add(role);
+        this.updateTimestamp();
     }
 
     public void removeRole(RoleEntity role) {
         if (this.roles != null) {
             this.roles.remove(role);
         }
+        this.updateTimestamp();
     }
 
     public void addRoles(Set<RoleEntity> roles) {
@@ -64,6 +66,14 @@ public class UserEntity extends BaseEntity implements UserInterface {
             this.roles = new HashSet<>();
         }
         this.roles.addAll(roles);
+        this.updateTimestamp();
+    }
+
+    public void removeRoles(Set<RoleEntity> roles) {
+        if (this.roles != null) {
+            this.roles.removeAll(roles);
+        }
+        this.updateTimestamp();
     }
 
     public void validate() {

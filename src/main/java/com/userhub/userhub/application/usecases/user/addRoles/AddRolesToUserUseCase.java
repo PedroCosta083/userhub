@@ -1,26 +1,24 @@
-package com.userhub.userhub.application.usecases.user.removeRole;
+package com.userhub.userhub.application.usecases.user.addRoles;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.userhub.userhub.application.usecases.user.DTOS.requests.RemoveRoleUserRequest;
-import com.userhub.userhub.application.usecases.user.DTOS.responses.RemoveRoleUserResponse;
-import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
+import com.userhub.userhub.application.usecases.user.DTOS.requests.AddRoleToUserRequest;
+import com.userhub.userhub.application.usecases.user.DTOS.responses.AddRoleToUserResponse;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.role.RoleRepositoryInterface;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
 
-public class RemoveRoleToUserUseCase implements BaseUseCaseInterface<RemoveRoleUserRequest, RemoveRoleUserResponse> {
-
-    private final UserRepositoryInterface userRepository;
+public class AddRolesToUserUseCase implements BaseUseCaseInterface<AddRolesToUserRequest, AddRolesToUserResponse> {
+        private final UserRepositoryInterface userRepository;
     private final RoleRepositoryInterface roleRepository;
 
-    public RemoveRoleToUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
+    public AddRoleToUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
-    public CompletableFuture<RemoveRoleUserResponse> execute(RemoveRoleUserRequest input) {
+    public CompletableFuture<AddRolesToUserResponse> execute(AddRolesToUserRequest input) {
 
         return CompletableFuture.supplyAsync(() -> {
             if (input == null) {
@@ -41,7 +39,7 @@ public class RemoveRoleToUserUseCase implements BaseUseCaseInterface<RemoveRoleU
 
             user.addRole(role);
             userRepository.updateUser(user);
-            return new RemoveRoleUserResponse(
+            return new AddRolesToUserResponse(
                     user.getId(),
                     user.getLogin().getUsername().getValue(),
                     user.getName(),
@@ -50,5 +48,4 @@ public class RemoveRoleToUserUseCase implements BaseUseCaseInterface<RemoveRoleU
                     "Role added successfully");
         });
     }
-
 }
