@@ -1,6 +1,7 @@
 package com.userhub.userhub.infra.repository.roles;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,11 @@ public class RoleRepository implements RoleRepositoryInterface {
     public RoleEntity searchById(UUID id) {
         RoleSchema roleSchema = jpaRoleRepository.findById(id).orElse(null);
         return RoleMapper.toDomain(roleSchema);
+    }
+
+    public Set<RoleEntity> searchByIds(List<UUID> ids) {
+        List<RoleSchema> roleSchemas = jpaRoleRepository.findAllById(ids);
+        return RoleMapper.toDomainSet(roleSchemas);
     }
 
     public RoleEntity searchByName(String name) {

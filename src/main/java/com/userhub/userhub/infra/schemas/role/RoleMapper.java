@@ -1,6 +1,7 @@
 package com.userhub.userhub.infra.schemas.role;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.userhub.userhub.domain.builders.RoleBuilder;
@@ -23,6 +24,12 @@ public class RoleMapper {
         return schemas.stream()
                 .map(RoleMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    public static Set<RoleEntity> toDomainSet(List<RoleSchema> schemas) {
+        return schemas.stream()
+                .map(RoleMapper::toDomain)
+                .collect(Collectors.toSet());
     }
 
     public static RoleSchema toSchema(RoleEntity entity) {

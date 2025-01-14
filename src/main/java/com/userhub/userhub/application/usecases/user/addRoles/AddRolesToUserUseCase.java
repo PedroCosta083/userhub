@@ -1,19 +1,23 @@
 package com.userhub.userhub.application.usecases.user.addRoles;
 
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
-import com.userhub.userhub.application.usecases.user.DTOS.requests.AddRoleToUserRequest;
-import com.userhub.userhub.application.usecases.user.DTOS.responses.AddRoleToUserResponse;
+import com.userhub.userhub.application.usecases.user.DTOS.requests.AddRolesToUserRequest;
+import com.userhub.userhub.application.usecases.user.DTOS.responses.AddRolesToUserResponse;
+import com.userhub.userhub.domain.entities.base.BaseUseCaseInterface;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.role.RoleRepositoryInterface;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
 
 public class AddRolesToUserUseCase implements BaseUseCaseInterface<AddRolesToUserRequest, AddRolesToUserResponse> {
-        private final UserRepositoryInterface userRepository;
+    private final UserRepositoryInterface userRepository;
     private final RoleRepositoryInterface roleRepository;
 
-    public AddRoleToUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
+    public AddRolesToUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -24,28 +28,32 @@ public class AddRolesToUserUseCase implements BaseUseCaseInterface<AddRolesToUse
             if (input == null) {
                 throw new IllegalArgumentException("Input cannot be null");
             }
-            if (input.getUserId() == null || input.getRoleId() == null) {
-                throw new IllegalArgumentException("User ID and Role name cannot be null");
+            if (input.getUserId() == null || input.getRoleIds() == null) {
+                throw new IllegalArgumentException("User ID and Role ID cannot be null");
             }
-            if (userRepository.searchById(input.getUserId()) == null) {
+            UserEntity user = userRepository.searchById(input.getUserId());
+            Set<RoleEntity> roles = roleRepository.searchByIds(input.getRoleIds());
+            if (roles.isEmpty()) {
+                throw new IllegalArgumentException("No roles found for the provided IDs.");
+            }
+
+            if (user == null) {
                 throw new IllegalArgumentException("User not found with ID: " + input.getUserId());
             }
-            if (roleRepository.searchById(input.getRoleId()) == null) {
-                throw new IllegalArgumentException("Role not found with ID: " + input.getRoleId());
-            }
 
-            UserEntity user = userRepository.searchById(input.getUserId());
-            RoleEntity role = roleRepository.searchById(input.getRoleId());
-
-            user.addRole(role);
+            user.addRoles(roles);
             userRepository.updateUser(user);
+
+            List<String> roleNames = roles.stream()
+                    .map(RoleEntity::getName)
+                    .collect(Collectors.toList());
+
             return new AddRolesToUserResponse(
                     user.getId(),
                     user.getLogin().getUsername().getValue(),
                     user.getName(),
-                    role.getId(),
-                    role.getName(),
-                    "Role added successfully");
+                    roleNames,
+                    "Roles added successfully");
         });
     }
 }

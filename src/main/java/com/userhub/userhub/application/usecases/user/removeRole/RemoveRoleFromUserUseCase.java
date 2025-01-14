@@ -10,12 +10,12 @@ import com.userhub.userhub.domain.entities.role.RoleRepositoryInterface;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
 
-public class RemoveRoleToUserUseCase implements BaseUseCaseInterface<RemoveRoleUserRequest, RemoveRoleUserResponse> {
+public class RemoveRoleFromUserUseCase implements BaseUseCaseInterface<RemoveRoleUserRequest, RemoveRoleUserResponse> {
 
     private final UserRepositoryInterface userRepository;
     private final RoleRepositoryInterface roleRepository;
 
-    public RemoveRoleToUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
+    public RemoveRoleFromUserUseCase(UserRepositoryInterface userRepository, RoleRepositoryInterface roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
