@@ -14,10 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.userhub.userhub.domain.entities.user.UserRepositoryInterface;
-import com.userhub.userhub.infra.services.BadWordsLoaderService;
-import com.userhub.userhub.application.usecases.user.DTOS.requests.CreateUserRequest;
-import com.userhub.userhub.application.usecases.user.DTOS.responses.CreateUserResponse;
-import com.userhub.userhub.application.usecases.user.create.CreateUserUseCase;
+import com.userhub.userhub.infra.loaders.BadWordsFileLoader;
+import com.userhub.userhub.usecases.user.CreateUserUseCase;
+import com.userhub.userhub.usecases.user.DTOS.requests.CreateUserRequest;
+import com.userhub.userhub.usecases.user.DTOS.responses.CreateUserResponse;
 import com.userhub.userhub.domain.entities.user.UserEntity;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class CreateUserUseCaseTest {
     @BeforeEach
     public void setup() throws IOException {
         userRepository = mock(UserRepositoryInterface.class);
-        BadWordsLoaderService badWordsLoaderService = new BadWordsLoaderService(new ObjectMapper());
+        BadWordsFileLoader badWordsLoaderService = new BadWordsFileLoader(new ObjectMapper());
         createUserUseCase = new CreateUserUseCase(userRepository, badWordsLoaderService);
     }
 
