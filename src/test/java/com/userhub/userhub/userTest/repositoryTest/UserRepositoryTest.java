@@ -10,16 +10,16 @@ import org.mockito.Mock;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.userhub.userhub.adapters.repositories.RoleRepository;
+import com.userhub.userhub.adapters.repositories.UserRepository;
 import com.userhub.userhub.domain.builders.RoleBuilder;
 import com.userhub.userhub.domain.builders.UserBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
 import com.userhub.userhub.domain.entities.user.UserEntity;
-import com.userhub.userhub.infra.repository.roles.RoleRepository;
-import com.userhub.userhub.infra.repository.users.UserRepository;
-import com.userhub.userhub.infra.services.BadWordsLoaderService;
 import com.userhub.userhub.domain.objetcValues.Login;
 import com.userhub.userhub.domain.objetcValues.Password;
 import com.userhub.userhub.domain.objetcValues.UserName;
+import com.userhub.userhub.infra.loaders.BadWordsFileLoader;
 import com.userhub.userhub.domain.objetcValues.Email;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.time.LocalDate;
 import java.io.IOException;
 
 @SpringBootTest
-@Import(BadWordsLoaderService.class)
+@Import(BadWordsFileLoader.class)
 public class UserRepositoryTest {
 
         @Autowired
@@ -39,7 +39,7 @@ public class UserRepositoryTest {
         private RoleRepository roleRepository;
 
         @Mock
-        private BadWordsLoaderService badWordService;
+        private BadWordsFileLoader badWordService;
 
         private List<String> badWords;
 

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.userhub.userhub.adapters.repositories.RoleRepository;
 import com.userhub.userhub.domain.builders.RoleBuilder;
 import com.userhub.userhub.domain.entities.role.RoleEntity;
-import com.userhub.userhub.infra.repository.roles.RoleRepository;
 
 @SpringBootTest
 public class RoleRepositoryTest {
